@@ -42,5 +42,5 @@ spec:
           [Install]
           WantedBy=multi-user.target
         enabled: true
-        name: one-shot-enable-tty-audit.service
+        name: enable-restricted-forwarding.service
 EOF
