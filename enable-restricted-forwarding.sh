@@ -11,7 +11,9 @@
 # This script can only enable and monitor the enforcement of rules for the provided $INTERFACES. It cannot roll back
 # its own changes. If you need to roll back changes, prevent this script from running on startup and reboot the node.
 #
-# 2024-03-01, Andreas Karis <akaris@redhat.com
+# Usage: ./enable-restricted-forwarding.sh <INTERFACE1> <INTERFACE2> <...>
+#
+# 2024-03-01, Andreas Karis <akaris@redhat.com>
 
 set -eux
 
@@ -50,7 +52,21 @@ function enable_forwarding_on_interfaces() {
     done
 }
 
+function check_interfaces() {
+    if [ $# -lt 1 ]; then
+        echo "No interfaces provided"
+        exit 1
+    fi
+    for intf in "$@"; do
+        if ! ip link | grep -q " ${intf}:"; then
+            echo "Invalid interface name provided: could not find '${intf}'"
+            exit 1
+        fi
+    done
+}
+
 while true; do
+    check_interfaces ${INTERFACES}
     append_drop_chain
     sync_drop_rules ${INTERFACES}
     enable_forwarding_on_interfaces ${INTERFACES}
