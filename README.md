@@ -10,14 +10,14 @@ OpenShift Container Platform supports 2 modes:
 * Specify `Global` to allow forwarding of all IP traffic.
 
 For new installations, the default is `Restricted`. For updates to OpenShift Container Platform 4.14, the default is
-`Global`. For versions of Red Hat OpenShift Container Platform prior to 4.14, the system behaved as in `Global` mode.
+`Global`. For versions of Red Hat OpenShift Container Platform prior to 4.14, the system behaves as in `Global` mode.
 
 ## Global mode
 
 In `Global` mode, Red Hat OpenShift Container Platform enables IP Forwarding on all interfaces. The cluster nodes work
-as routers for all virtual networking components on all interfaces, as well as for all external networks.
+as routers for all virtual networking components as well as for all external networks, on all interfaces.
 
-!(Global mode IP Forwarding)![ip-forwarding-global](https://github.com/andreaskaris/enable-restricted-forwarding/assets/3291433/e4f1b1e7-331c-43c3-bd04-121ba6049be9)
+![Global mode IP Forwarding](https://github.com/andreaskaris/enable-restricted-forwarding/assets/3291433/e4f1b1e7-331c-43c3-bd04-121ba6049be9)
 
 As a consequence:
 
