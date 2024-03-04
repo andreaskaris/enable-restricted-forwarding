@@ -71,7 +71,7 @@ Take note that the script can only enable and monitor the enforcement of rules f
 roll back its own changes on the fly. If one needs to roll back changes, one should delete the MachineConfiguration
 which in turn will trigger a node reboot.
 
-### How to run
+### How to apply the workaround
 
 First, download scripts [apply-machine-config.sh](https://raw.githubusercontent.com/andreaskaris/enable-restricted-forwarding/master/apply-machine-config.sh)
 and [enable-restricted-forwarding.sh](https://raw.githubusercontent.com/andreaskaris/enable-restricted-forwarding/master/enable-restricted-forwarding.sh) and store them inside the same directory.
