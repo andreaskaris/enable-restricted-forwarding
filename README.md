@@ -87,4 +87,4 @@ For example:
 ./apply-machine-config.sh master eno12409.123 eno12409.124
 ```
 
-The script stores a backup of the generated and applied MachineConfiguration and provided the location of that backup.
+The script stores a backup of the generated and applied MachineConfiguration and provides the location of that backup.
