@@ -20,6 +20,7 @@ set -eux
 INTERFACES=$*
 
 IPTABLES="$(which iptables)"
+IP6TABLES="$(which ip6tables)"
 IPTABLES_TABLE="filter"
 IPTABLES_CHAIN="FORWARD"
 IPTABLES_FORWARD_DROP_CHAIN="OVN-KUBE-FORWARD-DROP" 
@@ -37,10 +38,12 @@ function sync_drop_rules() {
     for intf in "$@"; do
         for dir in i o; do
             rule="-${dir} ${intf} -j DROP"
-            if ${IPTABLES} -t "${IPTABLES_TABLE}" -S "${IPTABLES_FORWARD_DROP_CHAIN}" | grep -q -- "${rule}"; then
-                continue
+            if ! ${IPTABLES} -t "${IPTABLES_TABLE}" -S "${IPTABLES_FORWARD_DROP_CHAIN}" | grep -q -- "${rule}"; then
+                ${IPTABLES} -t "${IPTABLES_TABLE}" -A "${IPTABLES_FORWARD_DROP_CHAIN}" ${rule}
             fi
-            ${IPTABLES} -t "${IPTABLES_TABLE}" -A "${IPTABLES_FORWARD_DROP_CHAIN}" ${rule}
+            if ! ${IP6TABLES} -t "${IPTABLES_TABLE}" -S "${IPTABLES_FORWARD_DROP_CHAIN}" | grep -q -- "${rule}"; then
+                ${IP6TABLES} -t "${IPTABLES_TABLE}" -A "${IPTABLES_FORWARD_DROP_CHAIN}" ${rule}
+            fi
         done
     done
 }
@@ -49,6 +52,7 @@ function enable_forwarding_on_interfaces() {
     for intf in "$@"; do
         intf=$(echo "${intf}" | sed 's#\.#/#g')
         sysctl -w "net.ipv4.conf.${intf}.forwarding=1"
+        sysctl -w "net.ipv6.conf.${intf}.forwarding=1"
     done
 }
 
@@ -58,7 +62,7 @@ function check_interfaces() {
         exit 1
     fi
     for intf in "$@"; do
-        if ! ip link | grep -q " ${intf}:"; then
+        if ! [ -e "/sys/class/net/${intf}" ]; then
             echo "Invalid interface name provided: could not find '${intf}'"
             exit 1
         fi
