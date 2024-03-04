@@ -17,7 +17,7 @@ For new installations, the default is `Restricted`. For updates to OpenShift Con
 In `Global` mode, Red Hat OpenShift Container Platform enables IP Forwarding on all interfaces. The cluster nodes work
 as routers for all virtual networking components on all interfaces, as well as for all external networks.
 
-![Global mode IP Forwarding](ip-forwarding-before.png)
+!(Global mode IP Forwarding)![ip-forwarding-global](https://github.com/andreaskaris/enable-restricted-forwarding/assets/3291433/e4f1b1e7-331c-43c3-bd04-121ba6049be9)
 
 As a consequence:
 
@@ -31,7 +31,7 @@ In order to address security concerns with `Global` mode, Red Hat OpenShift Cont
 Forwarding is enabled selectively only for `br-ex` and all interfaces that enable `br-ex` traffic, and the cluster
 nodes no longer work as routers for all external networks.
 
-![Restricted mode IP Forwarding](ip-forwarding-after.png)
+![Restricted mode IP Forwarding](https://github.com/andreaskaris/enable-restricted-forwarding/assets/3291433/4104977e-5c11-4c67-9461-0a1ac4b99853)
 
 As a consequence:
 
@@ -46,7 +46,7 @@ For specific deployment use cases, the currently available IP Forwarding modes m
 restrictive. One such use case is disabling routing globally, but enabling ExternalIPs selectively for specific external
 interfaces.
 
-![Restricted mode IP Forwarding with ExternalIPs on specific external interfaces](ip-forwarding-want.png)
+![Restricted mode IP Forwarding with ExternalIPs on specific external interfaces](https://github.com/andreaskaris/enable-restricted-forwarding/assets/3291433/a1336400-4b3c-4b3c-bd49-591888d82643)
 
 As a consequence:
 
